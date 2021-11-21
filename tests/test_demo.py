@@ -7,7 +7,7 @@ from support.common import get_element, get_element_text, type_element, click_el
 
 @pytest.fixture(scope="module")
 def driver():
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(executable_path="./drivers/chromedriver")
     yield driver
     driver.close()
     driver.quit()
