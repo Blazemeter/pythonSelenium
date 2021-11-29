@@ -60,11 +60,13 @@ Follow these steps to install all requirements of this repo on to your environme
 `pytest test_demo.py` <br>
 *A Chrome browser should be initiated and a login flow should be running automatically.  
 
+####Run tests under page object model pattern
+* Checkout branch: *chapter#6-page-object-model-intro
 Required environment variables:
-`BASE_URL`,`USER`,`PASS` <br>
+`BASE_URL`,`USERNAME`,`PASSWORD` <br>
 
 To run a specific test: <br>
-`BASE_URL=<BASE_URL> USER=<USERNAME> PASS=<PASSWORD> pytest path/to/test.py`
+`BASE_URL=<BASE_URL> USERNAME=<USERNAME> PASSWORD=<PASSWORD> pytest test_homepage.py`
 
 ### References and links
 
@@ -73,5 +75,6 @@ To run a specific test: <br>
 3. [W3Schools - CSS Selectors](https://www.w3schools.com/cssref/css_selectors.asp)
 4. [W3Schools - CSS Selectors Playground](https://www.w3schools.com/cssref/trysel.asp)
 5. [Selenium with Python official website](https://selenium-python.readthedocs.io/)
+6. [Selenium 4](https://www.blazemeter.com/blog/whats-new-in-selenium-four)
 
 [![Perforce](./images/perforce.jpg)](https://www.perforce.com/)
