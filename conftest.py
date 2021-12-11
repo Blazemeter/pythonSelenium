@@ -24,7 +24,7 @@ def password():
 def driver(request):
 
     # -- Run configuration - Running the tests under chrome local/remote -- #
-    if os.getenv('IS_LOCAL') is True:
+    if os.getenv('IS_LOCAL') == 'True':
         s = Service('./drivers/chromedriver')
         driver = webdriver.Chrome(service=s)
 
@@ -57,7 +57,7 @@ def driver(request):
     request.cls.driver = driver
 
     # -- Teardown method - Final steps -- #
-    yield
+    yield driver
 
     # -- WebDriver browser shutdown -- #
     driver.close()
@@ -69,12 +69,11 @@ def driver(request):
 @pytest.mark.usefixtures("driver")
 @pytest.fixture(scope="function", autouse=True)
 def name_blazemeter_reporter(request, driver):
-
     args = {
         'testCaseName': request.node.name,
         'testSuiteName': request.node.parent.parent.name
     }
-    # -- BlazeMeter report start -- #
+    # -- BlazeMeter report start command -- #
     driver.execute_script("/* FLOW_MARKER test-case-start */", args)
 
     yield
@@ -86,8 +85,8 @@ def name_blazemeter_reporter(request, driver):
         status = 'passed'
     args = {
         'status': status,
-        'message': '{testCase} {status}'.format(testCase=request.node.session.items[0].originalname,
+        'message': '{testCase} {status}'.format(testCase=request.node.name,
                                                 status=status)
     }
-    # -- BlazeMeter report stop -- #
+    # -- BlazeMeter report stop command -- #
     driver.execute_script("/* FLOW_MARKER test-case-stop */", args)
