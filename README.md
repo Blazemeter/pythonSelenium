@@ -53,14 +53,14 @@ Follow these steps to install all requirements of this repo on to your environme
 *Windows* : `venv/Scripts` <br>
 
 ### Running existing tests
-####Run your first selenium test
+**Run your first selenium test**
 * Checkout branch: *chapter#3-create-and-run-first-selenium-test*
 * Make sure you have activated you virtual environment
 * Run the test using the following command: <br>
 `pytest test_demo.py` <br>
 *A Chrome browser should be initiated and a login flow should be running automatically.  
 
-####Run tests under page object model pattern
+**Run tests under page object model pattern**
 * Checkout branch: *chapter#6-page-object-model-intro
 Required environment variables:
 `BASE_URL`,`USERNAME`,`PASSWORD` <br>
