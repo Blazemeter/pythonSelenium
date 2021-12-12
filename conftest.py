@@ -25,7 +25,7 @@ def driver(request):
     # -- Get the browser name from request params -- #
     browser = request.param
 
-    # -- Run configuration - Running the tests under chrome local/remote -- #
+    # -- Run configuration - Running the tests local/remote -- #
     if os.getenv('IS_LOCAL') == 'True':
 
         if browser == 'chrome':
