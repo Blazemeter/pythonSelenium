@@ -20,13 +20,21 @@ def password():
     return os.environ.get('PASSWORD')
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="class", params=["chrome", "edge"])
 def driver(request):
+    # -- Get the browser name from request params -- #
+    browser = request.param
 
-    # -- Run configuration - Running the tests under chrome local/remote -- #
+    # -- Run configuration - Running the tests local/remote -- #
     if os.getenv('IS_LOCAL') == 'True':
-        s = Service('./drivers/chromedriver')
-        driver = webdriver.Chrome(service=s)
+
+        if browser == 'chrome':
+            s = Service('./drivers/chromedriver')
+            driver = webdriver.Chrome(service=s)
+
+        if browser == 'edge':
+            s = Service('./drivers/msedgedriver')
+            driver = webdriver.Edge(service=s)
 
     else:
 
@@ -39,10 +47,12 @@ def driver(request):
         # -- https://a.blazemeter.com/api/v4/grid/capabilities -- #
         # -- https://tinyurl.com/desired-cap-blazemeter) -- #
         now = datetime.now().strftime("%Y-%m-%d %H:%M")
+        if browser == 'edge':
+            browser = 'MicrosoftEdge'  # to support BlazeMeter's grid browsers names
         desired_capabilities = {
-            'browserName': 'chrome',
-            'blazemeter.reportName': '{report_name}_{timestamp}'.format(report_name=request.node.name,
-                                                                        timestamp=now)
+            'browserName': browser,
+            'blazemeter.reportName': '{report_name}_{timestamp}_{browser}'.format(report_name=request.node.name,
+                                                                                  timestamp=now, browser=browser)
         }
         blazegrid_url = 'https://{api_key}:{api_secret}@{base}/api/v4/grid/wd/hub'.format(api_key=api_key,
                                                                                           api_secret=api_secret,
