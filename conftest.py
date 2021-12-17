@@ -6,22 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from datetime import datetime
 
-buildId = int(time.time())
-
-
-@pytest.fixture(scope="class")
-def base_url():
-    return os.environ.get('BASE_URL')
-
-
-@pytest.fixture(scope="class")
-def username():
-    return os.environ.get('USERNAME')
-
-
-@pytest.fixture(scope="class")
-def password():
-    return os.environ.get('PASSWORD')
+BUILD_ID = int(time.time())
 
 
 @pytest.fixture(scope="class", params=["chrome", "edge"])
@@ -54,7 +39,7 @@ def driver(request):
             browser = 'MicrosoftEdge'  # to support BlazeMeter's grid browsers names
         desired_capabilities = {
             'browserName': browser,
-            'blazemeter.buildId': buildId,
+            'blazemeter.buildId': BUILD_ID,
             'blazemeter.testName': 'Selenium course test',
             'blazemeter.reportName': '{report_name}_{timestamp}_{browser}'.format(report_name=request.node.name,
                                                                                   timestamp=now, browser=browser)
