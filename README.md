@@ -92,6 +92,11 @@ To run a specific test: <br>
 * To run a specific test in parallel (2 concurrent browsers): <br>
 `BASE_URL=<BASE_URL> USERNAME=<USERNAME> PASSWORD=<PASSWORD> API_KEY=<API_KEY> API_SECRET=<API_SECRET> pytest test_homepage.py -n 2`
 
+### Tested Website
+* Website: http://dbankdemo.com/bank/login
+* username: _jsmith@demo.io_
+* password: _Demo123!_
+
 ### References and links
 
 1. [Perforce BlazeMeter University](https://www.blazemeter.com/university/)
