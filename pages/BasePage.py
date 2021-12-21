@@ -11,7 +11,7 @@ def get_element(driver, by_locator):
     try:
         return WebDriverWait(driver, 10).until(EC.visibility_of_element_located(by_locator))
     except TimeoutException:
-        print("The element {element} was not found in the page".format(element=by_locator))
+        raise TimeoutException(msg="The element {element} was not found in the page".format(element=by_locator))
 
 
 class BasePage:
@@ -33,4 +33,8 @@ class BasePage:
         get_element(self.driver, by_locator).click()
 
     def is_element_visible(self, by_locator):
-        return bool(get_element(self.driver, by_locator).is_displayed())
+        try:
+            get_element(self.driver, by_locator)
+            return True
+        except TimeoutException:
+            return False

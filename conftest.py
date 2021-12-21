@@ -1,23 +1,12 @@
 import os
+import time
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from datetime import datetime
 
-
-@pytest.fixture(scope="class")
-def base_url():
-    return os.environ.get('BASE_URL')
-
-
-@pytest.fixture(scope="class")
-def username():
-    return os.environ.get('USERNAME')
-
-
-@pytest.fixture(scope="class")
-def password():
-    return os.environ.get('PASSWORD')
+BUILD_ID = int(time.time())
 
 
 @pytest.fixture(scope="class", params=["chrome", "edge"])
@@ -35,7 +24,6 @@ def driver(request):
         if browser == 'edge':
             s = Service('./drivers/msedgedriver')
             driver = webdriver.Edge(service=s)
-
     else:
 
         # -- Blazemeter access configuration -- #
@@ -51,6 +39,8 @@ def driver(request):
             browser = 'MicrosoftEdge'  # to support BlazeMeter's grid browsers names
         desired_capabilities = {
             'browserName': browser,
+            'blazemeter.buildId': BUILD_ID,
+            'blazemeter.testName': 'Selenium course test',
             'blazemeter.reportName': '{report_name}_{timestamp}_{browser}'.format(report_name=request.node.name,
                                                                                   timestamp=now, browser=browser)
         }
@@ -70,7 +60,6 @@ def driver(request):
     yield driver
 
     # -- WebDriver browser shutdown -- #
-    driver.close()
     driver.quit()
 
 
@@ -89,14 +78,26 @@ def name_blazemeter_reporter(request, driver):
     yield
 
     # -- Check for failed tests and update the report status accordingly -- #
-    if request.node.session.testsfailed > 0:
-        status = 'failed'
+    if request.node.rep_setup.failed:
+        message = request.node.rep_setup.longrepr.reprcrash.message
+        status = 'broken'
+    elif request.node.rep_call.failed:
+        message = request.node.rep_call.longrepr.reprcrash.message
+        is_assertion = 'AssertionError' in request.node.rep_call.longreprtext
+        status = 'failed' if is_assertion else 'broken'
     else:
+        message = ''
         status = 'passed'
     args = {
         'status': status,
-        'message': '{testCase} {status}'.format(testCase=request.node.name,
-                                                status=status)
+        'message': message
     }
     # -- BlazeMeter report stop command -- #
     driver.execute_script("/* FLOW_MARKER test-case-stop */", args)
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item):
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
