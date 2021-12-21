@@ -5,7 +5,7 @@ Selenium WebDriver & Python - How to Write, Run & Debug course - Part 1
 
 This repository is all about creating automated testing scripts using Python/Selenium WebDriver/Pytest and run them in scale using BlazeMeter.
 
-### Tech
+## Tech
 This repo uses the following open source project:
 
 [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/) <br> 
@@ -15,7 +15,7 @@ If you wish to create automated tests and monitor the quality of your product, S
 
 [![selenium](./images/selenium.png)](http://www.seleniumhq.org/docs/03_webdriver.jsp)
     
-### PreRequisites
+## PreRequisites
 Before diving into this repo, make sure you have the necessary knowledge on the following:
 
 1. [Python fundamentals](https://www.w3schools.com/python)
@@ -24,7 +24,7 @@ Before diving into this repo, make sure you have the necessary knowledge on the 
 4. [Selenium WebDriver Python bindings](http://selenium-python.readthedocs.io/api.html)
 5. [Github basics](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
-### Chapters
+## Chapters
 1. Chapter # 1 – Introduction to Selenium WebDriver
 2. Chapter # 2 – Installation Steps (IDE, Python, Selenium WebDriver)
 3. Chapter # 3 – Creating & Running Selenium WebDriver Test under Chrome
@@ -35,7 +35,7 @@ Before diving into this repo, make sure you have the necessary knowledge on the 
 8. Chapter # 8 – Integrate Selenium Tests into BlazeMeter
 9. Chapter # 9 – Parallel Running of Selenium Tests
 
-### Installation
+## Installation
 Follow these steps to install all requirements of this repo on to your environment:
 
 1. Create a python virtual environment <br>
@@ -52,21 +52,45 @@ Follow these steps to install all requirements of this repo on to your environme
 *MAC* : `venv/bin` <br>
 *Windows* : `venv/Scripts` <br>
 
-### Running existing tests
+## Running existing tests
+#### Chapter 3
 **Run your first selenium test**
 * Checkout branch: *chapter#3-create-and-run-first-selenium-test*
 * Make sure you have activated you virtual environment
 * Run the test using the following command: <br>
 `pytest test_demo.py` <br>
-*A Chrome browser should be initiated and a login flow should be running automatically.  
+*Chrome browser should be initiated and a login flow should be running automatically.  
 
+#### Chapter 6
 **Run tests under page object model pattern**
 * Checkout branch: *chapter#6-page-object-model-intro
-Required environment variables:
-`BASE_URL`,`USERNAME`,`PASSWORD` <br>
+* Make sure you have activated you virtual environment
+* Required environment variables: `BASE_URL`,`USERNAME`,`PASSWORD` <br>
 
 To run a specific test: <br>
 `BASE_URL=<BASE_URL> USERNAME=<USERNAME> PASSWORD=<PASSWORD> pytest test_homepage.py`
+
+#### Chapter 8
+**Run tests integrated with Blazemeter**
+* Checkout branch: *chapter#8-integrate-selenium-tests-into-blazemeter*
+* Make sure you have activated you virtual environment
+* Required environment variables:
+`BASE_URL`,`USERNAME`,`PASSWORD`, `API_KEY`, `API_SECRET` <br>
+* Generate api keys from `a.blazemeter.com`
+To run a specific test: <br>
+`BASE_URL=<BASE_URL> USERNAME=<USERNAME> PASSWORD=<PASSWORD> API_KEY=<API_KEY> API_SECRET=<API_SECRET> pytest test_homepage.py`
+
+#### Chapter 9
+**Run tests integrated with Blazemeter in parallel**
+* Checkout branch: *chapter#9-parallel-running-of-selenium-tests*
+* Make sure you have activated you virtual environment
+* Install `pytest-xdist` by running the following command: <br>
+`pip install pytest-xdist`
+* Required environment variables:
+`BASE_URL`,`USERNAME`,`PASSWORD`, `API_KEY`, `API_SECRET` <br>
+* Required commandline arguments: `-n 2` (2 parallel runs are available for free blazemeter users)
+* To run a specific test in parallel (2 concurrent browsers): <br>
+`BASE_URL=<BASE_URL> USERNAME=<USERNAME> PASSWORD=<PASSWORD> API_KEY=<API_KEY> API_SECRET=<API_SECRET> pytest test_homepage.py -n 2`
 
 ### References and links
 

@@ -96,6 +96,8 @@ def name_blazemeter_reporter(request, driver):
     driver.execute_script("/* FLOW_MARKER test-case-stop */", args)
 
 
+# -- PyTest hook for report generation -- #
+# -- https://docs.pytest.org/en/latest/reference/reference.html#_pytest.hookspec.pytest_runtest_makereport -- #
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item):
     outcome = yield
